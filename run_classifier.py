@@ -299,6 +299,48 @@ class XnliBaiduProcessor(DataProcessor):
     return ["contradiction", "entailment", "neutral"]
 
 
+class LcqmcProcessor(DataProcessor):
+  """Processor for the LCQMC data set."""
+
+  def __init__(self):
+      pass
+
+  def get_train_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(
+          os.path.join(data_dir, "train.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "train-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[0])
+          text_b = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[2])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+      return examples
+
+  def get_dev_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "dev-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[0])
+          text_b = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[2])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+      return examples
+
+  def get_labels(self):
+      """See base class."""
+      return ["0", "1"]
+
+
 class MnliProcessor(DataProcessor):
   """Processor for the MultiNLI data set (GLUE version)."""
 
@@ -836,6 +878,7 @@ def main(_):
       "mrpc": MrpcProcessor,
       "xnli": XnliProcessor,
       "xnli_baidu": XnliBaiduProcessor,
+      "lcqmc": LcqmcProcessor,
   }
 
   tokenization.validate_case_matches_checkpoint(FLAGS.do_lower_case,
