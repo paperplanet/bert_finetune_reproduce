@@ -27,7 +27,7 @@ import tokenization
 import tensorflow as tf
 import setproctitle
 
-setproctitle.setproctitle("python run.py")
+setproctitle.setproctitle("python")
 
 flags = tf.flags
 
@@ -234,7 +234,7 @@ class XnliProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
     """See base class."""
-    lines = self._read_tsv(os.path.join(data_dir, "xnli.dev.tsv"))
+    lines = self._read_tsv(os.path.join(data_dir, "xnli.test.tsv"))
     examples = []
     for (i, line) in enumerate(lines):
       if i == 0:
