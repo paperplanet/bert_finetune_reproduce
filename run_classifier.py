@@ -25,6 +25,9 @@ import modeling
 import optimization
 import tokenization
 import tensorflow as tf
+import setproctitle
+
+setproctitle.setproctitle("python")
 
 flags = tf.flags
 
@@ -231,7 +234,7 @@ class XnliProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
     """See base class."""
-    lines = self._read_tsv(os.path.join(data_dir, "xnli.dev.tsv"))
+    lines = self._read_tsv(os.path.join(data_dir, "xnli.test.tsv"))
     examples = []
     for (i, line) in enumerate(lines):
       if i == 0:
@@ -250,6 +253,131 @@ class XnliProcessor(DataProcessor):
   def get_labels(self):
     """See base class."""
     return ["contradiction", "entailment", "neutral"]
+
+
+class XnliBaiduProcessor(DataProcessor):
+  """Processor for the XNLI data set."""
+
+  def __init__(self):
+    pass
+
+  def get_train_examples(self, data_dir):
+    """See base class."""
+    lines = self._read_tsv(
+        os.path.join(data_dir, "train.tsv"))
+    examples = []
+    for (i, line) in enumerate(lines):
+      if i == 0:
+        continue
+      guid = "train-%d" % (i)
+      text_a = tokenization.convert_to_unicode(line[0])
+      text_b = tokenization.convert_to_unicode(line[1])
+      label = tokenization.convert_to_unicode(line[2])
+      if label == tokenization.convert_to_unicode("contradictory"):
+        label = tokenization.convert_to_unicode("contradiction")
+      examples.append(
+          InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+    return examples
+
+  def get_dev_examples(self, data_dir):
+    """See base class."""
+    lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+    examples = []
+    for (i, line) in enumerate(lines):
+      if i == 0:
+        continue
+      guid = "dev-%d" % (i)
+      text_a = tokenization.convert_to_unicode(line[0])
+      text_b = tokenization.convert_to_unicode(line[1])
+      label = tokenization.convert_to_unicode(line[2])
+      examples.append(
+          InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+    return examples
+
+  def get_labels(self):
+    """See base class."""
+    return ["contradiction", "entailment", "neutral"]
+
+
+class LcqmcProcessor(DataProcessor):
+  """Processor for the LCQMC data set."""
+
+  def __init__(self):
+      pass
+
+  def get_train_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(
+          os.path.join(data_dir, "train.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "train-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[0])
+          text_b = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[2])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+      return examples
+
+  def get_dev_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "dev-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[0])
+          text_b = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[2])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+      return examples
+
+  def get_labels(self):
+      """See base class."""
+      return ["0", "1"]
+
+class ChnsenticorpProcessor(DataProcessor):
+  """Processor for the ChnSentiCorp data set."""
+
+  def __init__(self):
+      pass
+
+  def get_train_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(
+          os.path.join(data_dir, "train.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "train-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[0])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, label=label))
+      return examples
+
+  def get_dev_examples(self, data_dir):
+      """See base class."""
+      lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+      examples = []
+      for (i, line) in enumerate(lines):
+          if i == 0:
+              continue
+          guid = "dev-%d" % (i)
+          text_a = tokenization.convert_to_unicode(line[1])
+          label = tokenization.convert_to_unicode(line[0])
+          examples.append(
+              InputExample(guid=guid, text_a=text_a, label=label))
+      return examples
+
+  def get_labels(self):
+      """See base class."""
+      return ["0", "1"]
 
 
 class MnliProcessor(DataProcessor):
@@ -788,6 +916,9 @@ def main(_):
       "mnli": MnliProcessor,
       "mrpc": MrpcProcessor,
       "xnli": XnliProcessor,
+      "xnli_baidu": XnliBaiduProcessor,
+      "lcqmc": LcqmcProcessor,
+      "chnsenticorp": ChnsenticorpProcessor
   }
 
   tokenization.validate_case_matches_checkpoint(FLAGS.do_lower_case,
