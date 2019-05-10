@@ -341,7 +341,7 @@ class LcqmcProcessor(DataProcessor):
       return ["0", "1"]
 
 class ChnsenticorpProcessor(DataProcessor):
-  """Processor for the LCQMC data set."""
+  """Processor for the ChnSentiCorp data set."""
 
   def __init__(self):
       pass
