@@ -234,7 +234,7 @@ class XnliProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
     """See base class."""
-    lines = self._read_tsv(os.path.join(data_dir, "xnli.test.tsv"))
+    lines = self._read_tsv(os.path.join(data_dir, "xnli.dev.tsv"))
     examples = []
     for (i, line) in enumerate(lines):
       if i == 0:
@@ -281,7 +281,7 @@ class XnliBaiduProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
     """See base class."""
-    lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+    lines = self._read_tsv(os.path.join(data_dir, "dev.tsv"))
     examples = []
     for (i, line) in enumerate(lines):
       if i == 0:
@@ -323,7 +323,7 @@ class LcqmcProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
       """See base class."""
-      lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+      lines = self._read_tsv(os.path.join(data_dir, "dev.tsv"))
       examples = []
       for (i, line) in enumerate(lines):
           if i == 0:
@@ -363,7 +363,7 @@ class ChnsenticorpProcessor(DataProcessor):
 
   def get_dev_examples(self, data_dir):
       """See base class."""
-      lines = self._read_tsv(os.path.join(data_dir, "test.tsv"))
+      lines = self._read_tsv(os.path.join(data_dir, "dev.tsv"))
       examples = []
       for (i, line) in enumerate(lines):
           if i == 0:
