@@ -114,3 +114,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea/
+
+data/
+!data/ner_sample_data/
