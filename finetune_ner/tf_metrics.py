@@ -4,6 +4,11 @@ from:
 https://github.com/guillaumegenthial/tf_metrics/blob/master/tf_metrics/__init__.py
 """
 
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 __author__ = "Guillaume Genthial"
 
 import numpy as np

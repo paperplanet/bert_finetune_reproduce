@@ -11,6 +11,11 @@
 
 # add function :evaluate(predicted_label, ori_label): which will not read from file
 
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import sys
 import re
 import codecs
