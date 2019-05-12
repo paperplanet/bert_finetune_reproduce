@@ -1,4 +1,4 @@
-# Reproduce BERT finetune resutlts for chinese datasets
+# Reproduce BERT finetune results for chinese datasets
 
 This repo reproduces BERT finetune resutlts for chinese datasets. Data can be downloaded from Baidu ERNIE repo(*https://github.com/PaddlePaddle/LARK/tree/develop/ERNIE*, https://ernie.bj.bcebos.com/task_data.tgz), which contains MSRA-NER, LCQMC, XNLI, ChnSentiCorp, nlpcc-dbqa.
 
