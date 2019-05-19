@@ -1178,12 +1178,17 @@ def main(_):
         num_written_lines += 1
     assert num_written_lines == num_actual_predict_examples
     if task_name == 'nlpccdbqa':
+      import numpy as np
       evaluate_mrr_pred = []
+      evaluate_f1_pred = []
       for i, tf_predict in enumerate(tf_predicts):
         correspond_example = predict_examples[int(tf_predict['guid'].decode(encoding='utf8').split('-')[-1]) - 1 ]
         evaluate_mrr_pred.append((correspond_example.qid,
                                   float(tf_predict['probabilities'][1]),
                                   int(correspond_example.label)))
+        evaluate_f1_pred.append((int(np.argmax(tf_predict['probabilities'])),
+                                  int(correspond_example.label)))
+
       evaluate_mrr_pred = sorted(evaluate_mrr_pred, key=lambda elem: (elem[0], -elem[1]))
       def evaluate_mrr(preds):
         last_qid = None
@@ -1204,7 +1209,24 @@ def main(_):
             correct = True
 
         return total_mrr / qnum
+
       print("mrr: {}".format(evaluate_mrr(evaluate_mrr_pred)))
+
+      def evaluate_f1(preds):
+        predicts = np.array([x[0] for x in preds])
+        labels = np.array([x[1] for x in preds])
+        correct_predict_num = int(np.sum(np.multiply(predicts,labels)))
+        total_predict_num = int(np.sum(predicts))
+        total_label_num = int(np.sum(labels))
+        if total_label_num == 0 or total_predict_num == 0:
+          return 0
+        r = correct_predict_num / total_label_num
+        p = correct_predict_num / total_predict_num
+        f1 = 2 * p * r / (p + r)
+        return f1
+
+      print("f1: {}".format(evaluate_f1(evaluate_f1_pred)))
+
 
   # import time
   # while True:
