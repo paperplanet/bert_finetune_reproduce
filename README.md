@@ -10,14 +10,14 @@ Baidu reproduce result:
 
 | Epoch | F1 in develop | F1 in test |
 | ----- | ------------- | ---------- |
-| 3     | 94.0          | 92.6       |
+| 3     | 94.0%          | 92.6%       |
 
 Our reproduce result:
 
 | Epoch | F1 in develop | F1 in test |
 | ----- | ------------- | ---------- |
-| 2     | 94.15         | 92.34      |
-| 10    | 95.75         | 94.89      |
+| 2     | 94.15%         | 92.34%      |
+| 10    | 95.75%         | 94.89%      |
 
 run script:
 
@@ -143,8 +143,40 @@ python run_classifier.py \
 --output_dir output_model/bert_chnsenticorp_output_ep5/
 ```
 
-------
+## nlpcc-dbqa
 
+Baidu reproduce result:
+
+| Epoch | MRR in develop | MRR in test | F1 in develop | F1 in test |
+| ----- | -------------- | ----------- | -------------- | ----------- |
+| 3     | 94.7%          | 94.6%       | 80.7%          | 80.8%       |
+
+Our reproduce result:
+
+| Epoch | MRR in develop | MRR in test | F1 in develop | F1 in test |
+| ----- | -------------- | ----------- | -------------- | ----------- |
+| 2     | 93.2%          | 93.4%       | 78.3%          | 79.7%       |
+
+run script:
+
+```bash
+python run_classifier.py \
+--task_name=nlpccdbqa \
+--do_train=true \
+--do_eval=true \
+--do_predict=true \
+--data_dir=../../../corpus/baidu_ernie_task_data/chnsenticorp/ \
+--vocab_file=bert_model/chinese_L-12_H-768_A-12/vocab.txt \
+--bert_config_file=bert_model/chinese_L-12_H-768_A-12/bert_config.json \
+--init_checkpoint=bert_model/chinese_L-12_H-768_A-12/bert_model.ckpt \
+--max_seq_length=128 \
+--train_batch_size=16 \
+--learning_rate=5e-5 \
+--num_train_epochs=2.0 \
+--output_dir output_model/bert_nlpccdbqa_output_ep2/
+```
+
+------
 ## Reference
 
 <https://github.com/google-research/bert>
