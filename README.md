@@ -155,7 +155,7 @@ Our reproduce result:
 
 | Epoch | MRR in develop | MRR in test | F1 in develop | F1 in test |
 | ----- | -------------- | ----------- | -------------- | ----------- |
-| 2     | 93.9%          | 94.0%       | 78.6%          | 81.3%       |
+| 3     | 93.9%          | 94.0%       | 78.6%          | 81.3%       |
 
 run script:
 
@@ -172,7 +172,7 @@ python run_classifier.py \
 --max_seq_length=128 \
 --train_batch_size=32 \
 --learning_rate=5e-5 \
---num_train_epochs=2.0 \
+--num_train_epochs=3.0 \
 --output_dir output_model/bert_nlpccdbqa_output_ep2/
 ```
 
